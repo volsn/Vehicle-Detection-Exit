@@ -169,6 +169,7 @@ def read_camera(camera):
                 return
 
             count += 1
+            print('foo', count)
             ret, image = cap.read()
 
             try:
@@ -178,7 +179,6 @@ def read_camera(camera):
                 continue
 
             if count % camera.seconds == 0:
-                cv2.imwrite('test_{}.png'.format(camera.pk), image)
 
                 try:
                     image = cv2.bitwise_and(image, image, mask=mask)
@@ -186,6 +186,7 @@ def read_camera(camera):
                     cap = cv2.VideoCapture(camera.ip_adress)
                     continue
 
+                print('bar')
                 try:
                     boxes = detector.predict(image)
                 except:
@@ -197,6 +198,7 @@ def read_camera(camera):
                     roi = orig[y: y+h, x: x+w]
 
                     requests.get(camera.open_link)
+                    print('             saved')
                     save_image(camera, orig, orig[y: y+h, x: x+w])
 
 
