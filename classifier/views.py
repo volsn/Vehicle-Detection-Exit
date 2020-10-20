@@ -115,7 +115,7 @@ def get_random_string(length):
     result_str = ''.join(random.choice(letters) for i in range(length))
     return result_str
 
-def save_image(camera, image, roi, label):
+def save_image(camera, image, roi):
     filename = 'temp/{}.jpg'.format(get_random_string(10))
     filename_roi = 'temp/{}.jpg'.format(get_random_string(10))
     cv2.imwrite(filename, image)
@@ -142,6 +142,8 @@ def get_segment_crop(img,tol=0, mask=None):
     return img[np.ix_(mask.any(1), mask.any(0))]
 
 def read_camera(camera):
+
+    print('foo-start')
 
     detector = \
         VehicleDetector({
@@ -179,6 +181,7 @@ def read_camera(camera):
                 continue
 
             if count % camera.seconds == 0:
+                cv2.imwrite('test_{}.png'.format(camera.pk), image)
 
                 try:
                     image = cv2.bitwise_and(image, image, mask=mask)
@@ -207,6 +210,7 @@ threads = {}
 @login_required
 def start(request, pk):
     camera = Camera.objects.get(pk=pk)
+    print('fee')
 
     if camera.active:
         return HttpResponse('Ошибка! Камера уже запущена')
