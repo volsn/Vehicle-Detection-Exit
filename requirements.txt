@@ -1,0 +1,9 @@
+numpy
+opencv-python
+django
+psycopg2-binary
+requests
+Pillow
+scikit-learn
+django-cleanup
+

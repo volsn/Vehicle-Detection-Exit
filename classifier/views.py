@@ -143,9 +143,6 @@ def get_segment_crop(img,tol=0, mask=None):
 
 def read_camera(camera):
 
-    with open('model.pickle', 'rb') as file:
-        model = pickle.load(file)
-
     detector = \
         VehicleDetector({
             "labels": ["car", "truck", "bus"],
@@ -198,10 +195,8 @@ def read_camera(camera):
                 for box, _ in boxes:
                     (y, h, x, w) = box
                     roi = orig[y: y+h, x: x+w]
-                    cv2.imwrite(get_random_string(10) + '.png', roi)
 
-                    if label == 0:
-                        requests.get(camera.open_link)
+                    requests.get(camera.open_link)
                     save_image(camera, orig, orig[y: y+h, x: x+w])
 
 
